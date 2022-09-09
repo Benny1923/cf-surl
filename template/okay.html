@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>short url service</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+
+    <style>
+        @import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+        body {
+            /* font-size: 1.7em; */
+            font-family: 'Noto Sans TC', '微軟正黑體', sans-serif;
+        }
+    </style>
+    <script>
+        window._data = RENDER_DATA
+        var popover
+        window.onload = () => {
+            let shortlink = new URL(window.location)
+            shortlink.pathname = window._data.index
+            let qrcode = "https://chart.googleapis.com/chart?cht=qr&chs=300x300&chld=M&chl=" + encodeURIComponent(shortlink)
+            document.querySelector('#short-link').value = shortlink
+            document.querySelector('#short-link-img').src = qrcode
+            popover = new bootstrap.Popover(document.querySelector('#copy-link'), {
+                trigger: 'focus'
+            })
+        }
+        function copyLink() {
+            document.querySelector('#short-link').select()
+            document.execCommand('copy')
+            popover.show()
+            document.querySelector('#copy-link').focus()
+        }
+    </script>
+</head>
+<body>
+    <div class="container text-center">
+        <div class="container-fluid mt-5 mb-3 border-bottom">
+            <h1 class="display-5"><a href="/" class="text-reset text-decoration-none">Private short url service</a></h1>
+            <p>fast, private, no tracking.</p>
+        </div>
+        <h3>Thanks for use this service. Here is your short link:</h3>
+        <div class="input-group my-5 w-50 mx-auto">
+            <input type="text" class="form-control" id="short-link" readonly>
+            <button class="btn btn-primary" type="button" id="copy-link" data-bs-content="Copied!" data-bs-placement="top" onclick="copyLink()">Copy link</button>
+        </div>
+        <img src="" alt="short link" class="img-thumbnail" id="short-link-img">
+    </div>
+    <footer class="fixed-bottom w-100 container-fluid border-top bg-light pt-3">
+        <p>Copyright © 2022 <a href="https://www.bennyling.cc" class="text-reset">Benny1923</a>. powered by cloudflare & google charts</p>
+    </footer>
+</body>
+
+</html>
